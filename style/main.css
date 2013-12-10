@@ -1,0 +1,22 @@
+div[dropzone] {
+    border: 2px dashed #bbb;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    font: 20pt bold;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+#preview-box
+{
+	border:1px solid;
+	border-radius:10px;
+	background-color: #E6E6E6;
+	padding: 2%;
+	min-height: 215px;
+}
+.fileInfo
+{
+    font-size: 20px;
+}

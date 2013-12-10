@@ -1,0 +1,98 @@
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="style/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="style/main.css">
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="style/bootstrap/js/bootstrap.min.js"></script>
+        <!--Libraries-->
+        <script type="text/javascript" src="libraries/angular/angular.js"></script>
+        <script type="text/javascript" src="libraries/pouchdb/pouch.min.js"></script>
+        <script type="text/javascript" src="libraries/crypto-js/sha3.js"></script>
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <!--Controllers-->
+    </head>
+<body>
+<div class="container" ng-controller="workspaceCtrl"  ng-app="myApp">
+    <h1>Work Space</h1>
+    <div class="row" style="padding-top: 5%;">
+        <div class="col-md-2">
+            <ul class="nav nav-pills">
+              <li class="active"><a href="#" data-toggle="modal" data-target="#workspaceList">Your Workspaces</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Messages</a></li>
+            </ul>
+        </div>
+        <div class="modal fade" id="workspaceList" tabindex="-1" role="dialog" aria-labelledby="workspaceListLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="workspaceListLabel">Your Current Workspaces</h4>
+              </div>
+              <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Select Workspace</li>
+                    <li class="list-group-item" ng-repeat="(key, workspace) in workspaces"><a href="#" ng-click="activate(workspace)" data-dismiss="modal">{{workspace.name}}<span class="badge pull-right">Recent Author</span></a></li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="col-md-4">
+            <h6>HTML</h6>
+            <textarea class="form-control" ng-model="markup" rows="10" cols="8"></textarea>
+            <input type="file" id="files" name="files[]" multiple />
+            <output id="list"></output>
+
+            <script>
+              function handleFileSelect(evt) {
+                var files = evt.target.files; // FileList object
+
+                // files is a FileList of File objects. List some properties.
+                var output = [];
+                for (var i = 0, f; f = files[i]; i++) {
+                  output.push('<li class="fileInfo"><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                              f.size, ' bytes, last modified: ',
+                              f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                              '</li>');
+                }
+                document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+              }
+
+              document.getElementById('files').addEventListener('change', handleFileSelect, false);
+            </script>
+        </div>
+        <div class="col-md-6">
+            <h6>Quick Preview<h6>
+            <div id="preview-box" markup-view name="markupTranslated" ng-model="markupTranslated" strip-br="false"></div>
+            <br>
+            <form class="form-inline" role="form">
+                <input style="width: 50%;" type="text" class="form-control" placeholder="Work Space Name" ng-model="activeSpace.name" >
+                <button type="button" class="btn btn-default" ng-click="newSpace()">Sync</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-4">
+            Sub Workspaces:
+                <br>
+                <a href="#">Inbox <span class="badge">42</span></a>
+                <br>
+                <a href="#">Inbox <span class="badge">42</span></a>
+                <br>
+                <a href="#">Inbox <span class="badge">42</span></a>
+        </div>
+    </div>
+</div>
+    </body>
+    <script>
+        var myApp = angular.module('myApp', []);
+    </script>
+    <!--survey Management-->
+    <script type="text/javascript" src="js/workspace.js"></script>
